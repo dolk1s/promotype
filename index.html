@@ -3,46 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PromoType | Marketplace 2026</title>
+    <title>PromoType | Marketplace</title>
     <style>
-        :root {
-            --bg: #050505; --panel: #0d0d0f; --accent: #8A2BE2;
-            --accent-bright: #bc82ff; --text: #ffffff; --text-dim: #888; --border: #1e1e22;
-        }
+        :root { --bg: #050505; --panel: #0d0d0f; --accent: #8A2BE2; --text: #ffffff; --border: #1e1e22; }
         * { box-sizing: border-box; font-family: 'Inter', sans-serif; transition: 0.2s; }
         body { margin: 0; background: var(--bg); color: var(--text); overflow-x: hidden; }
-        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 50px; background: rgba(5, 5, 5, 0.95); border-bottom: 1px solid var(--border); position: fixed; width: 100%; top: 0; z-index: 1000; backdrop-filter: blur(15px); }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 50px; background: rgba(5,5,5,0.95); border-bottom: 1px solid var(--border); position: fixed; width: 100%; top: 0; z-index: 1000; backdrop-filter: blur(15px); }
         .logo { font-size: 24px; font-weight: 900; color: var(--accent); cursor: pointer; text-transform: uppercase; }
         .game-nav { display: flex; gap: 8px; background: #000; padding: 5px; border-radius: 12px; }
-        .game-nav button { background: none; border: none; color: var(--text-dim); padding: 10px 20px; cursor: pointer; border-radius: 8px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .game-nav button { background: none; border: none; color: #777; padding: 10px 20px; cursor: pointer; border-radius: 8px; font-weight: 700; }
         .game-nav button.active { background: var(--accent); color: white; }
-        .game-nav button img { width: 18px; height: 18px; border-radius: 2px; }
-        .header-right { display: flex; align-items: center; gap: 20px; }
         .cart-trigger { background: var(--panel); border: 1px solid var(--border); padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; }
-        .cart-dropdown { position: absolute; right: 50px; top: 75px; width: 340px; background: var(--panel); border: 1px solid var(--accent); border-radius: 15px; padding: 25px; display: none; z-index: 2000; box-shadow: 0 20px 50px rgba(0,0,0,0.9); }
-        .cart-dropdown.active { display: block; animation: slideIn 0.3s; }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(-15px); } to { opacity: 1; transform: translateY(0); } }
-        .page { display: none; margin-top: 100px; padding: 40px 50px; min-height: 75vh; }
+        .cart-dropdown { position: absolute; right: 50px; top: 75px; width: 320px; background: var(--panel); border: 1px solid var(--accent); border-radius: 15px; padding: 25px; display: none; z-index: 2000; box-shadow: 0 20px 50px rgba(0,0,0,0.9); }
+        .cart-dropdown.active { display: block; }
+        .page { display: none; margin-top: 100px; padding: 40px 50px; }
         .page.active { display: block; }
         .market-controls { background: #0a0a0c; border: 1px solid var(--border); padding: 25px; border-radius: 20px; margin-bottom: 30px; }
-        .search-row { display: flex; gap: 15px; margin-bottom: 20px; }
-        .search-input { flex-grow: 1; background: #16161a; border: 1px solid var(--border); padding: 15px 20px; border-radius: 12px; color: white; outline: none; }
-        .sort-select { background: #16161a; border: 1px solid var(--border); color: white; padding: 0 15px; border-radius: 12px; cursor: pointer; }
-        .sub-nav { display: flex; flex-direction: column; gap: 15px; }
-        .filter-group { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-        .cat-btn { background: #1c1c21; border: 1px solid var(--border); color: var(--text-dim); padding: 7px 15px; border-radius: 8px; cursor: pointer; font-size: 12px; }
+        .search-input { width: 100%; background: #16161a; border: 1px solid var(--border); padding: 15px 20px; border-radius: 12px; color: white; outline: none; margin-bottom: 15px;}
+        .sub-nav { display: flex; gap: 10px; flex-wrap: wrap; }
+        .cat-btn { background: #1c1c21; border: 1px solid var(--border); color: #777; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 12px; }
         .cat-btn.active { background: var(--accent); color: white; }
         .skin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; }
-        .card { background: var(--panel); border: 1px solid var(--border); padding: 15px; border-radius: 15px; text-align: center; position: relative; }
+        .card { background: var(--panel); border: 1px solid var(--border); padding: 20px; border-radius: 15px; text-align: center; position: relative; }
         .card:hover { border-color: var(--accent); transform: translateY(-5px); }
-        .card img { width: 100%; height: 110px; object-fit: contain; margin-bottom: 10px; border-radius: 10px; background: #16161a; }
-        .card .stock { position: absolute; top: 10px; right: 10px; font-size: 10px; color: var(--accent-bright); font-weight: 800; background: rgba(138, 43, 226, 0.15); padding: 2px 6px; border-radius: 4px; }
+        /* ЗАМЕНА КАРТИНКИ НА ИКОНКУ */
+        .icon-box { width: 100%; height: 100px; background: linear-gradient(45deg, #16161a, #252529); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 40px; margin-bottom: 15px; color: var(--accent); opacity: 0.8; }
+        .price { color: #00ff88; font-weight: 800; font-size: 18px; margin-bottom: 15px; }
         .add-btn { width: 100%; background: #fff; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 700; }
-        .add-btn:hover { background: var(--accent); color: #fff; }
-        .cart-item { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 8px; }
-        .cart-item.removing { animation: removeOut 0.4s forwards; }
-        @keyframes removeOut { to { transform: translateX(-50px); opacity: 0; } }
-        footer { background: #030303; padding: 40px 50px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; margin-top: 50px; }
+        .cart-item { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 8px; border-bottom: 1px solid #222; padding-bottom: 5px; }
+        footer { background: #030303; padding: 40px 50px; border-top: 1px solid var(--border); text-align: center; margin-top: 50px; color: #444; }
     </style>
 </head>
 <body>
@@ -50,18 +39,18 @@
 <header>
     <div class="logo" onclick="showPage('market')">PromoType</div>
     <nav class="game-nav">
-        <button onclick="switchGame('cs2', this)" id="btn-cs2"><img src="https://www.google.com"> CS2</button>
-        <button onclick="switchGame('dota2', this)" id="btn-dota2"><img src="https://www.google.com"> DOTA 2</button>
-        <button onclick="switchGame('rust', this)" class="active" id="btn-rust"><img src="https://www.google.com"> RUST</button>
+        <button onclick="switchGame('cs2', this)" id="btn-cs2">CS2</button>
+        <button onclick="switchGame('dota2', this)" id="btn-dota2">DOTA 2</button>
+        <button onclick="switchGame('rust', this)" class="active" id="btn-rust">RUST</button>
     </nav>
     <div class="header-right">
         <div class="cart-trigger" onclick="toggleCart()">🛒 <span id="cart-count">0</span></div>
         <div class="cart-dropdown" id="cart-menu">
-            <h3>Корзина</h3>
+            <h3 style="margin-top:0">Корзина</h3>
             <div id="cart-items-list"></div>
-            <div style="margin-top: 20px; border-top: 1px solid #222; padding-top: 15px;">
+            <div style="margin-top: 20px; padding-top: 15px;">
                 <div style="display:flex; justify-content:space-between; font-weight:bold;"><span>Итого:</span><span id="total-price">0 ₽</span></div>
-                <button class="add-btn" style="background:var(--accent); color:white; margin-top:15px" id="checkout-btn" disabled onclick="alert('Заказ оформлен!')">Оформить заказ</button>
+                <button class="add-btn" style="background:var(--accent); color:white; margin-top:15px" onclick="alert('Переход к оплате...')">Оформить заказ</button>
             </div>
         </div>
     </div>
@@ -69,95 +58,67 @@
 
 <div id="market-page" class="page active">
     <div class="market-controls">
-        <div class="search-row">
-            <input type="text" class="search-input" id="skin-search" placeholder="Поиск по названию..." oninput="handleSearch()">
-            <select class="sort-select" onchange="handleSort(this.value)">
-                <option value="expensive">Сначала дорогие</option>
-                <option value="cheap">Сначала дешевые</option>
-            </select>
-        </div>
+        <input type="text" class="search-input" id="skin-search" placeholder="Поиск по названию..." oninput="handleSearch()">
         <div class="sub-nav" id="sub-nav-container"></div>
     </div>
-    <div id="item-count" style="margin-bottom: 20px; font-size: 13px; color: var(--text-dim);">Найдено товаров: 0</div>
     <div class="skin-grid" id="market-grid"></div>
 </div>
 
-<div id="info-page" class="page">
-    <div style="max-width: 800px; margin: 0 auto;">
-        <h1>О проекте <span style="color:var(--accent)">PromoType</span></h1>
-        <p>Мы используем прокси-серверы 2026 года для моментальной загрузки скинов.</p>
-        <button class="add-btn" style="width:200px" onclick="showPage('market')">Вернуться</button>
-    </div>
-</div>
-
 <script>
-    // Все картинки теперь через прокси weserv.nl
     const itemsData = {
         cs2: [
-            {name: 'AK-47 | Redline', price: 2500, types: ['Винтовки'], img: 'https://images.weserv.nl'},
-            {name: '★ Karambit | Fade', price: 185000, types: ['Ножи'], img: 'https://images.weserv.nl'}
+            {name: 'AK-47 | Redline', price: 2500, types: ['Винтовки'], icon: '🔫'},
+            {name: 'Karambit | Fade', price: 185000, types: ['Ножи'], icon: '🔪'}
         ],
-        dota2: [
-            {name: 'Dragonclaw Hook', price: 18000, types: ['Immortal'], img: 'https://images.weserv.nl'}
-        ],
+        dota2: [{name: 'Dragonclaw Hook', price: 18000, types: ['Immortal'], icon: '⚓'}],
         rust: [
-            {name: "Glory AK47", price: 21235, types: ['Оружие', 'AK-47'], stock: 12, img: 'https://images.weserv.nl'},
-            {name: "Alien Red", price: 9962, types: ['Оружие', 'AK-47'], stock: 40, img: 'https://images.weserv.nl'},
-            {name: "Tempered Mp5", price: 34305, types: ['Оружие', 'MP5'], stock: 19, img: 'https://images.weserv.nl'},
-            {name: "Phantom Revolver", price: 1954, types: ['Оружие', 'Револьверы'], stock: 9, img: 'https://images.weserv.nl'},
-            {name: "Glory BAR", price: 619, types: ['Оружие', 'Болтовки'], stock: 19, img: 'https://images.weserv.nl'}
+            {name: "Glory AK47", price: 21235, types: ['AK-47', 'Оружие'], icon: '🎯'},
+            {name: "Tempered Mp5", price: 34305, types: ['MP5', 'Оружие'], icon: '⚡'},
+            {name: "Phantom Revolver", price: 1954, types: ['Револьверы', 'Оружие'], icon: '🤠'},
+            {name: "Glory BAR", price: 619, types: ['Болтовки', 'Оружие'], icon: '🔭'}
         ]
     };
 
     const filterConfig = {
-        cs2: [{ label: 'Категории', options: ['Все', 'Винтовки', 'Ножи'] }],
-        dota2: [{ label: 'Категории', options: ['Все', 'Arcanas', 'Immortal'] }],
-        rust: [{ label: 'Тип', options: ['Все', 'Оружие', 'AK-47', 'MP5', 'Револьверы', 'Болтовки'] }]
+        cs2: ['Все', 'Винтовки', 'Ножи'],
+        dota2: ['Все', 'Immortal'],
+        rust: ['Все', 'Оружие', 'AK-47', 'MP5', 'Револьверы', 'Болтовки']
     };
 
-    let cart = [], currentGame = 'rust', activeFilters = new Set(), searchQuery = '', currentSort = 'expensive';
+    let cart = [], currentGame = 'rust', activeFilters = new Set(), searchQuery = '';
 
     function handleSearch() { searchQuery = document.getElementById('skin-search').value.toLowerCase(); renderSkins(); }
-    function handleSort(val) { currentSort = val; renderSkins(); }
     function toggleCart() { document.getElementById('cart-menu').classList.toggle('active'); }
-    function showPage(p) { document.querySelectorAll('.page').forEach(pg => pg.classList.remove('active')); document.getElementById(p+'-page').classList.add('active'); window.scrollTo(0,0); }
+    function showPage(p) { document.querySelectorAll('.page').forEach(pg => pg.classList.remove('active')); document.getElementById(p+'-page').classList.add('active'); }
 
     function switchGame(game, btn) {
-        showPage('market'); currentGame = game; activeFilters.clear();
+        currentGame = game; activeFilters.clear();
         document.querySelectorAll('.game-nav button').forEach(b => b.classList.remove('active')); btn.classList.add('active');
         renderFilters(); renderSkins();
     }
 
     function renderFilters() {
         const container = document.getElementById('sub-nav-container');
-        container.innerHTML = filterConfig[currentGame].map(group => `
-            <div class="filter-group">
-                ${group.options.map(opt => `<button class="cat-btn ${ (opt === 'Все' && activeFilters.size === 0) || activeFilters.has(opt) ? 'active' : '' }" onclick="handleFilter('${opt}')">${opt}</button>`).join('')}
-            </div>`).join('');
+        container.innerHTML = filterConfig[currentGame].map(opt => `<button class="cat-btn ${ (opt === 'Все' && activeFilters.size === 0) || activeFilters.has(opt) ? 'active' : '' }" onclick="handleFilter('${opt}')">${opt}</button>`).join('');
     }
 
     function handleFilter(opt) {
-        if (opt === 'Все') activeFilters.clear();
-        else activeFilters.has(opt) ? activeFilters.delete(opt) : activeFilters.add(opt);
-        renderFilters(); renderSkins();
+        if (opt === 'Все') activeFilters.clear(); else activeFilters.has(opt) ? activeFilters.delete(opt) : activeFilters.add(opt);
+        renderSkins(); renderFilters();
     }
 
     function renderSkins() {
         const grid = document.getElementById('market-grid');
-        let filtered = itemsData[currentGame].filter(i => {
+        const filtered = itemsData[currentGame].filter(i => {
             const mSearch = i.name.toLowerCase().includes(searchQuery);
             const mFilter = activeFilters.size === 0 || Array.from(activeFilters).some(f => i.types.includes(f));
             return mSearch && mFilter;
         });
-        if (currentSort === 'cheap') filtered.sort((a,b) => a.price - b.price);
-        if (currentSort === 'expensive') filtered.sort((a,b) => b.price - a.price);
-        document.getElementById('item-count').innerText = `Найдено: ${filtered.length}`;
         grid.innerHTML = filtered.map(item => `
             <div class="card">
-                <div class="stock">x${item.stock || 0}</div>
-                <img src="${item.img}">
-                <div style="font-size:12px; font-weight:600; height:30px; overflow:hidden; margin:10px 0;">${item.name}</div>
-                <div style="color:#00ff88; font-weight:800; margin-bottom:10px;">${item.price.toLocaleString()} ₽</div>
+                <div class="icon-box">${item.icon}</div>
+                <div style="font-size:13px; font-weight:600; margin-bottom:10px; height:20px; overflow:hidden;">${item.name}</div>
+                <div class="price">${item.price.toLocaleString()} ₽</div>
                 <button class="add-btn" onclick="addToCart('${item.name}', ${item.price}, '${currentGame}')">В КОРЗИНУ</button>
             </div>`).join('');
     }
@@ -165,21 +126,19 @@
     function addToCart(n, p, g) { cart.push({ id: Date.now(), name: n, price: p, game: g }); updateCart(); }
     function updateCart() {
         const list = document.getElementById('cart-items-list'), count = document.getElementById('cart-count'), total = document.getElementById('total-price');
-        count.innerText = cart.length; document.getElementById('checkout-btn').disabled = cart.length === 0;
+        count.innerText = cart.length;
         let sum = 0, html = '';
         ['cs2', 'dota2', 'rust'].forEach(g => {
             const gItems = cart.filter(i => i.game === g);
             if (gItems.length > 0) {
-                html += `<div style="color:var(--accent); font-size:10px; font-weight:900; margin-top:10px;">${g.toUpperCase()}</div>`;
-                gItems.forEach(i => { sum += i.price; html += `<div class="cart-item" id="item-${i.id}"><span>${i.name}</span><span>${i.price.toLocaleString()} ₽ <span style="color:red; cursor:pointer;" onclick="removeItem(${i.id})">✕</span></span></div>`; });
+                html += `<div style="color:var(--accent); font-size:10px; font-weight:900; margin:10px 0 5px 0;">${g.toUpperCase()}</div>`;
+                gItems.forEach(i => { sum += i.price; html += `<div class="cart-item"><span>${i.name}</span><span>${i.price.toLocaleString()} ₽ <span style="color:red; cursor:pointer;" onclick="removeItem(${i.id})">✕</span></span></div>`; });
             }
         });
-        list.innerHTML = html || 'Пусто'; total.innerText = sum.toLocaleString() + ' ₽';
+        list.innerHTML = html || 'Корзина пуста'; total.innerText = sum.toLocaleString() + ' ₽';
     }
-    function removeItem(id) {
-        const el = document.getElementById(`item-${id}`);
-        if(el) { el.classList.add('removing'); setTimeout(() => { cart = cart.filter(i => i.id !== id); updateCart(); }, 400); }
-    }
+    function removeItem(id) { cart = cart.filter(i => i.id !== id); updateCart(); }
+    
     switchGame('rust', document.getElementById('btn-rust'));
 </script>
 </body>
